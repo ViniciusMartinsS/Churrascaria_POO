@@ -1,0 +1,33 @@
+<%@ page pageEncoding="UTF-8" %>
+
+<style>
+    .mySlides {display:none;}
+</style>
+
+<div class="w3-content w3-section" style="max-width:1000px">
+    <img class="mySlides" src="http://cidadegourmet.com/wp-content/uploads/2015/06/IMGG_4588.jpg" style="width:100%; position: relative;">
+    <img class="mySlides" src="http://ventoharagano.com.br/wp-content/uploads/2015/08/IMGG_9877.jpg" style="width:100%">
+    <img class="mySlides" src="http://1.bp.blogspot.com/-6Spl42gWXWo/VR2hhnVEZXI/AAAAAAAADNs/mBNMNucXNZQ/s1600/10929122_1532436727010488_2239756774823793956_o.jpg" style="width:100%">
+
+</div>
+
+<script>
+    var myIndex = 0;
+    carousel();
+
+    function carousel() {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        myIndex++;
+        if (myIndex > x.length) {
+            myIndex = 1
+        }
+        x[myIndex - 1].style.display = "block";
+        setTimeout(carousel, 2000); // Change image every 2 seconds
+    }
+</script>
+
+

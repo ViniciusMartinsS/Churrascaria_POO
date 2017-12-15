@@ -1,0 +1,85 @@
+<%@page import="com.domain.web.Funcionario"%>
+<%@ page pageEncoding="UTF-8" %>
+<%
+    String loginErrorMessage = null;
+    if (request.getParameter("submit") != null) {
+        String codigo = request.getParameter("login");
+        String senha = request.getParameter("senha");
+        try {
+            Funcionario f = Funcionario.getUser(codigo, senha);
+            if (f == null) {
+                loginErrorMessage = "Login e/ou senha não encontrados";
+
+            } else {
+                session.setAttribute("me.id", f.getId());
+                session.setAttribute("me.login", f.getLogin());
+                session.setAttribute("me.passwordHash", f.getPasswordHash());
+                response.sendRedirect(request.getContextPath() + "/HomePage.jsp");
+            }
+        } catch (Exception ex) {
+            loginErrorMessage = ex.getMessage();
+        }
+    }
+
+    if (loginErrorMessage != null) {
+%>
+    <div style="color: red;text-align: center"><%=loginErrorMessage%></div>
+    <%}%>
+    
+<%
+    if (request.getParameter("do-logoff") != null) {
+        session.removeAttribute("me.id");
+        session.removeAttribute("me.login");
+        session.removeAttribute("me.passwordHash");
+        response.sendRedirect(request.getContextPath() + "/HomePage.jsp");
+    }
+%>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <img src="http://www.zigzagzoom.com.br/assets/site/img/buffet/81354-churras.png" width="50" height="50">
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="HomePage.jsp">Ínicio</a>
+            </li>
+            <%if (session.getAttribute("me.login") == null) {%>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="QuemSomos.jsp">Quem somos</a>
+            </li>
+            <%}%>
+            <li class="nav-item">
+                <a class="nav-link " href="Cardapio.jsp">Cardápio</a>
+            </li>
+            <%if (session.getAttribute("me.login") == null) {%>
+            <li class="nav-item">
+                <a class="nav-link" href="Contato.jsp">Contato</a>
+            </li>
+            <%}%>
+            <%if (session.getAttribute("me.login") != null) {%>
+            <li class="nav-item">
+                <a class="nav-link" href="PesquisarMesa.jsp">Realizar Pedido</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="ManterEspeto.jsp">Cadastrar Espeto</a>
+            </li>
+            <%}%>
+        </ul>
+        <%if (session.getAttribute("me.login") == null) {%>
+        <form class="form-inline my-2 my-lg-0" method="POST">
+            <input class="form-control mr-sm-2" type="text" placeholder="Usuário" aria-label="Search" name="login" required>
+            <input class="form-control mr-sm-2" type="password" placeholder="Senha" aria-label="Search" name="senha" required>
+            <input class="btn btn-outline-secondary my-2 my-sm-0" type="submit" name="submit" value="Entrar">
+        </form>
+        <%}%>
+        <%if (session.getAttribute("me.login") != null) {%>
+        <form>
+            Bem vindo, <%=session.getAttribute("me.login")%>&nbsp;
+            <input class="btn btn-outline-secondary my-2 my-sm-0"  type="submit" name="do-logoff" value="Sair"/>
+        </form>
+        <%}%>
+    </div>
+</nav>

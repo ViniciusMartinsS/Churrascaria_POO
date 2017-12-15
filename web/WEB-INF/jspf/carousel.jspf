@@ -1,0 +1,33 @@
+<%@ page pageEncoding="UTF-8" %>
+
+<style>
+    .mySlides {display:none;}
+</style>
+
+<div class="w3-content w3-section" style="max-width:500px">
+    <img class="mySlides" src="https://www.rodalesorganiclife.com/sites/rodalesorganiclife.com/files/articles/2016/05/veggiemeatcouple-885.jpg" style="width:97% ">
+    <img class="mySlides" src="https://i.pinimg.com/736x/94/37/3a/94373a5ae1195a5623f3b48b269e61c2.jpg" style="width:100%; height: 270px;">
+    <img class="mySlides" src="http://ondecomeremsalvador.com.br/wp-content/uploads/2013/09/Fogo-de-Ch%C3%A3o-01-600x401.jpg" style="width:100%; height:270px;">
+
+</div>
+
+<script>
+    var myIndex = 0;
+    carousel();
+
+    function carousel() {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        myIndex++;
+        if (myIndex > x.length) {
+            myIndex = 1
+        }
+        x[myIndex - 1].style.display = "block";
+        setTimeout(carousel, 2000); // Change image every 2 seconds
+    }
+</script>
+
+
